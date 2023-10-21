@@ -1,0 +1,10 @@
+server:
+  port: 8088
+
+---
+
+spring:
+  datasource:
+    password: postgrsql098
+    url: jdbc:postgresql://localhost:5432/online-shop-spring-boot
+    username: postgres

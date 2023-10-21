@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Login Page</title>
+    <style>
+            h1, .error {
+                color: #272044;
+                text-align: center;
+            }
+            body {
+                font-family: Calibri, Helvetica, sans-serif;
+                background-color: yellow;
+            }
+            .container {
+                margin: 25px;
+                padding: 25px;
+                background-color: lightblue;
+            }
+            form {
+                margin: 25px 390px;
+                border: 3px solid #f1f1f1;
+            }
+            input[type=email], input[type=password] {
+                width: 100%;
+                margin: 8px 0;
+                padding: 12px 20px;
+                display: inline-block;
+                border: 2px solid green;
+                box-sizing: border-box;
+            }
+            button {
+                background-color: #4CAF50;
+                width: 100%;
+                color: yellow;
+                padding: 15px;
+                margin: 10px 0px;
+                border: none;
+                cursor: pointer;
+            }
+            button:hover {
+                opacity: 0.7;
+            }
+        </style>
+</head>
+<body>
+<h1> Login Form </h1>
+<form action="/login" method="POST">
+    <div class="container">
+        <label>Email address : </label>
+        <input type="email" placeholder="Enter email" name="email" required>
+        <label>Password : </label>
+        <input type="password" placeholder="Enter Password" name="password" required>
+        <button type="submit">Login</button>
+    </div>
+</form>
+<div align="center">
+    <a href="/" class="btn btn-link">Cancel</a>
+</div>
+<br>
+<div class="error">
+    <#if errorMessage??>${errorMessage}</#if>
+</div>
+</body>
+</html>

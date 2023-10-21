@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <title>online-shop</title>
+    <style>
+            h1 {
+                color: #272044;
+            }
+            pre {
+                color: blueviolet;
+                padding: 0 0 24px;
+                font-size: 19px;
+            }
+            body {
+                font-family: Cerebri Sans, Helvetica, Arial, sans-serif;
+                background-repeat: no-repeat;
+                background-size: cover;
+            }
+            a {
+                color: #22b2da;
+            }
+            .btn-signup {
+                color: #00DFA2;
+            }
+            .btn-login {
+                color: orange;
+            }
+            .btn-logout {
+                color: white;
+            }
+            button {
+                border-radius: 19px;
+                background-color: #885df1;
+                border: 1px solid #885df1;
+                font-size: 14px;
+                line-height: 22px;
+                padding: 8px 12px;
+                text-decoration: none;
+                transition: all 250ms ease;
+                box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
+            }
+            button:hover {
+                color: blueviolet;
+                background: #ffe121;
+                cursor: pointer;
+            }
+        </style>
+</head>
+
+<body background="/images/goods.png">
+<div>
+    <a href="/signup" class="btn btn-signup">Sign up</a>
+</div>
+<br>
+<div>
+    <a href="/login" class="btn btn-login">Login</a>
+</div>
+<h1>Hey, welcome! :)</h1>
+<pre>Please, do what you wanna do!
+                Add products, change them or remove.
+                Whatever you want.</pre>
+<br>
+<div>
+    <a href="/goods/">Goods</a>
+</div><br>
+<div>
+    <a href="/goods/add">Add</a>
+</div><br>
+<div>
+    <a href="/goods/remove">Remove</a>
+</div><br>
+<div>
+    <a href="/goods/update">Update</a>
+</div><br>
+<br>
+<form action="/logout" method="POST">
+    <button type="submit" class="btn btn-logout">Log out</button>
+</form>
+</body>
+</html>

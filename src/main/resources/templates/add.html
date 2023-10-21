@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add goods</title>
+    <style>
+            h1 {
+                text-align: center;
+            }
+            body {
+                background: #4A55A2;
+            }
+            .container {
+                margin: 25px;
+                padding: 25px;
+                background-color: lightblue;
+            }
+            form {
+                margin: 25px 390px;
+            }
+            input[type=text], input[type=number] {
+                text-align: center;
+                width: 100%;
+                margin: 8px 0;
+                padding: 12px 20px;
+                display: inline-block;
+                border: 2px solid green;
+                box-sizing: border-box;
+            }
+            button {
+                background-color: #4CAF50;
+                width: 100%;
+                color: yellow;
+                padding: 15px;
+                margin: 10px 0px;
+                border: none;
+                cursor: pointer;
+            }
+            button:hover {
+                opacity: 0.7;
+            }
+        </style>
+</head>
+<body>
+<h1>Add goods</h1>
+<form action="/goods/add" method="POST">
+    <div class="container">
+        <div>
+            <label for="name">Name:</label>
+            <input type="text" placeholder="--Enter the name--" id="name" name="name" required>
+        </div><br>
+        <div>
+            <label for="price">Price:</label>
+            <input type="number" placeholder="--Enter the price--" id="price" name="price" required>
+        </div><br>
+        <button type="submit">Submit</button>
+    </div>
+</form>
+<div align="center">
+    <a href="/" class="btn btn-link">Cancel</a>
+</div>
+<br>
+<div align="center">
+    <a href="/goods/" class="btn btn-link">Go to goods list</a>
+</div>
+<br>
+<#if errorMessage??>
+<div align="center">${errorMessage}</div>
+</#if>
+</body>
+</html>
