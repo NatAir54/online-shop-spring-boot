@@ -15,14 +15,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.io.IOException;
 import java.util.Map;
 
 @RestController
 public class ClientAuthenticationController {
     private static final PageGenerator PAGE_GENERATOR = PageGenerator.instance();
-    private final Logger LOGGER = LoggerFactory.getLogger(OnlineShopController.class);
+    private final Logger LOGGER = LoggerFactory.getLogger(ClientAuthenticationController.class);
 
     @Autowired
     private ClientService clientService;
@@ -32,13 +30,14 @@ public class ClientAuthenticationController {
     @RequestMapping(path = "/login", method = RequestMethod.GET)
     @ResponseBody
     public String getLoginForm() {
-        LOGGER.info("Inside getLoginForm of OnlineShopController");
+        LOGGER.info("Inside getLoginForm of ClientAuthenticationController");
         return PAGE_GENERATOR.getPage("login.html");
     }
 
     @RequestMapping(path = "/login", method = RequestMethod.POST)
-    public void login(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        LOGGER.info("Inside login of OnlineShopController");
+    @ResponseBody
+    public String login(HttpServletRequest request, HttpServletResponse response) {
+        LOGGER.info("Inside login of ClientAuthenticationController");
         Client client = WebUtil.getClient(request);
 
         Map<String, Object> parameters = Map.of("errorMessage", "Data is incorrect. Please try again!");
@@ -49,25 +48,26 @@ public class ClientAuthenticationController {
             if (userToken != null) {
                 Cookie cookie = new Cookie("user-token", userToken);
                 response.addCookie(cookie);
-                response.sendRedirect("/");
+                return PAGE_GENERATOR.getPage("shop.html");
             } else {
-                response.getWriter().write(page);
+                return page;
             }
         } else {
-            response.getWriter().write(page);
+            return page;
         }
     }
 
     @RequestMapping(path = "/signup", method = RequestMethod.GET)
     @ResponseBody
     public String getSignupForm() {
-        LOGGER.info("Inside getSignupForm of OnlineShopController");
+        LOGGER.info("Inside getSignupForm of ClientAuthenticationController");
         return PAGE_GENERATOR.getPage("signup.html");
     }
 
     @RequestMapping(path = "/signup", method = RequestMethod.POST)
-    public void signup(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        LOGGER.info("Inside signup of OnlineShopController");
+    @ResponseBody
+    public String signup(HttpServletRequest request) {
+        LOGGER.info("Inside signup of ClientAuthenticationController");
         Map<String, Object> parameters = Map.of("errorMessage", "Data is incorrect. Please try again!");
         String page = PAGE_GENERATOR.getPage("signup.html", parameters);
 
@@ -75,13 +75,18 @@ public class ClientAuthenticationController {
             Client client = WebUtil.getClient(request);
             if (clientService.findByEmail(client.getEmail()) == null) {
                 securityService.signup(client);
-                response.sendRedirect("/");
+                return PAGE_GENERATOR.getPage("shop.html");
             } else {
-                response.getWriter().write(page);
+                return page;
             }
         } catch (Exception e) {
             e.printStackTrace();
-            response.getWriter().write(page);
+            return page;
         }
+    }
+
+    @RequestMapping(path = "/logout", method = RequestMethod.POST)
+    public void logout() {
+
     }
 }

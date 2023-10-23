@@ -5,13 +5,10 @@ import com.nataliiakoval.onlineshopspringboot.service.GoodsService;
 import com.nataliiakoval.onlineshopspringboot.web.util.PageGenerator;
 import com.nataliiakoval.onlineshopspringboot.web.util.WebUtil;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -50,17 +47,17 @@ public class OnlineShopController {
     }
 
     @RequestMapping(path = "/goods/add", method = RequestMethod.POST)
-    public void addGood(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    @ResponseBody
+    public String addGood(HttpServletRequest request) {
         LOGGER.info("Inside addGood of OnlineShopController");
         try {
             Goods good = WebUtil.getGoods(request);
             goodsService.addGood(good);
-            response.sendRedirect("/goods/");
+            return this.getGoodsList();
         } catch (Exception e) {
-            String errorMessage = "Goods data is incorrect. Please try again!";
-            Map<String, Object> parameters = Map.of("errorMessage", errorMessage);
-            String page = PAGE_GENERATOR.getPage("add.html", parameters);
-            response.getWriter().write(page);
+            Map<String, Object> parameters = Map.of("errorMessage", "Data is incorrect. Please try again!");
+            e.printStackTrace();
+            return PAGE_GENERATOR.getPage("add.html", parameters);
         }
     }
 
@@ -76,18 +73,18 @@ public class OnlineShopController {
     }
 
     @RequestMapping(path = "/goods/update", method = RequestMethod.POST)
-    public void updateGood(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    @ResponseBody
+    public String updateGood(HttpServletRequest request) {
         LOGGER.info("Inside updateGood of OnlineShopController");
         try {
             Goods good = WebUtil.getGoods(request);
             int idRequested = Integer.parseInt(request.getParameter("id"));
             goodsService.update(good, idRequested);
-            response.sendRedirect("/goods/");
+            return this.getGoodsList();
         } catch (Exception e) {
-            String errorMessage = "Goods data is incorrect. Please try again!";
-            Map<String, Object> parameters = Map.of("errorMessage", errorMessage);
-            String page = PAGE_GENERATOR.getPage("update.html", parameters);
-            response.getWriter().write(page);
+            Map<String, Object> parameters = Map.of("errorMessage", "Data is incorrect. Please try again!");
+            e.printStackTrace();
+            return PAGE_GENERATOR.getPage("update.html", parameters);
         }
     }
 
@@ -103,17 +100,17 @@ public class OnlineShopController {
     }
 
     @RequestMapping(path = "/goods/remove", method = RequestMethod.POST)
-    public void removeGood(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    @ResponseBody
+    public String removeGood(HttpServletRequest request) {
         LOGGER.info("Inside removeGood of OnlineShopController");
         try {
             int idForRemove = Integer.parseInt(request.getParameter("id"));
             goodsService.remove(idForRemove);
-            response.sendRedirect("/goods/");
+            return this.getGoodsList();
         } catch (Exception e) {
-            String errorMessage = "Goods id is incorrect. Please try again!";
-            Map<String, Object> parameters = Map.of("errorMessage", errorMessage);
-            String page = PAGE_GENERATOR.getPage("remove.html", parameters);
-            response.getWriter().write(page);
+            Map<String, Object> parameters = Map.of("errorMessage", "Goods id is incorrect. Please try again!");
+            e.printStackTrace();
+            return PAGE_GENERATOR.getPage("remove.html", parameters);
         }
     }
 }
